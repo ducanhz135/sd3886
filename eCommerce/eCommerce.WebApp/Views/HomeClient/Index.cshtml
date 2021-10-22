@@ -1,0 +1,130 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var listNewProducts = (List<eCommerce.ViewModels.Catalog.Products.PublicProductViewModel>)ViewBag.NewProducts;
+    var path = "/_content/eCommerce.BackendApi/user-content/";
+}
+
+
+@section slide
+{
+    <div class="header_slide">
+        <div class="header_bottom_left">
+            <div class="categories">
+               
+                @await Component.InvokeAsync("ProductCategory")
+            </div>
+        </div>
+        <div class="header_bottom_right">
+            <div class="slider">
+                <div id="slider">
+                    <div id="mover">
+
+                        <div class="slide">
+                            <div class="slider-img">
+                                <a href="#"><img src="~/_content/eCommerce.BackendApi/user-content/addc7ea3-0625-4f78-8bae-c7e41cb6d746.jpg" alt="learn more" /></a>
+                            </div>
+                            <div class="slider-text">
+                                <h1>Clearance<br><span>SALE</span></h1>
+                                <h2>UPTo 20% OFF</h2>
+                                <div class="features_list">
+                                    <h4>Get to Know</h4>
+                                </div>
+                                <a href="preview.html" class="button">Shop Now</a>
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+
+                        <div class="slide">
+                            <div class="slider-img">
+                                <a href="#"><img src="~/_content/eCommerce.BackendApi/user-content/addc7ea3-0625-4f78-8bae-c7e41cb6d746.jpg" alt="learn more" /></a>
+                            </div>
+                            <div class="slider-text">
+                                <h1>Clearance<br><span>SALE</span></h1>
+                                <h2>UPTo 20% OFF</h2>
+                                <div class="features_list">
+                                    <h4>Get to Know More About Our Memorable Services Lorem Ipsum is simply dummy text</h4>
+                                </div>
+                                <a href="preview.html" class="button">Shop Now</a>
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+}
+<div class="content">
+    <div class="content_top">
+        <div class="heading">
+            <h3>New Product</h3>
+        </div>
+        <div class="see">
+            <p><a href="/san-pham">See all Products</a></p>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="section group">
+        @foreach (var item in listNewProducts)
+        {
+           
+
+
+             //var url = "/chi-tiet/" + item.MetaTitle + "-" + item.ID;
+        <div class="grid_1_of_4 images_1_of_4">
+            <a asp-controller="product" asp-action="index" asp-route-id="@item.Id"><img src="@(path+item.ImagePath)" alt="@item.Name" width="150" height="70" /></a>
+            <h2>@item.Name</h2>
+            <div class="price-details">
+                <div class="price-number">
+                    <p><span class="rupees">@(item.Price > 0 ? item.Price.ToString("N0")+" $" : "Liên hệ")</span></p>
+                </div>
+                <div class="add-cart">
+                    <h4><a asp-controller="cart" asp-action="buy" asp-route-id="@item.Id">Add to cart</a></h4>
+                </div>
+                <div style="padding-top:22%; width:105%;">
+                    <a asp-controller="HomeClient" asp-action="ShowComment" asp-route-id="@item.Id">
+                        @await Component.InvokeAsync("Star", item.Id)
+
+                    </a>
+                </div>
+            </div>
+            
+        </div>
+        }
+
+    </div>
+    @*<div class="content_bottom">
+        <div class="heading">
+            <h3>Sản phẩm hot</h3>
+        </div>
+        <div class="see">
+            <p><a href="#">Xem tất cả</a></p>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="section group">
+        @foreach (var item in listFeatureProducts)
+        {
+            var url = "/chi-tiet/" + item.MetaTitle + "-" + item.ID;
+            <div class="grid_1_of_4 images_1_of_4">
+                <a href="@url"><img src="@item.Image" alt="@item.Name" /></a>
+                <h2>@item.Name</h2>
+                <div class="price-details">
+                    <div class="price-number">
+                        <p><span class="rupees">@(item.Price.HasValue ? item.Price.Value.ToString("N0") : "Liên hệ")</span></p>
+                    </div>
+                    <div class="add-cart">
+                        <h4><a href="/them-gio-hang?productId=@item.ID&quantity=1">Thêm vào giỏ</a></h4>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </div>
+        }
+    </div>*@
+</div>
+

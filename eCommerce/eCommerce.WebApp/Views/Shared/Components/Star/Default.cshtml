@@ -1,0 +1,75 @@
+﻿@{
+    var averageRating = (double)ViewBag.AverageRating;
+    var roundRating = (int)ViewBag.RoundRating;
+    var oddRating = (double)ViewBag.OddRating;
+    var oddRatingWidth = (oddRating * 10) + "px";
+}
+<style>
+    .star {
+        font-size: x-large;
+        width: 20px;
+        display: inline-block;
+        color: gray;
+    }
+
+        .star:last-child {
+            margin-right: 0;
+        }
+
+        .star:before {
+            content: '\2605';
+        }
+
+        .star.on {
+            color: gold;
+        }
+
+        .star.half:after {
+            content: '\2605';
+            color: gold;
+            position: absolute;
+            margin-left: -20px;
+            @*width: @oddRatingWidth;*@
+            width: 10px;
+            overflow: hidden;
+        }
+</style>
+
+<input type="hidden" value="@oddRatingWidth" id="oddRatingWidth" />
+<span>@averageRating</span>
+@if (oddRating == 0)
+{
+    @for (int i = 0; i < roundRating; i++)
+    {
+        <span class="star on"></span>
+    }
+
+    @for (int i = roundRating; i < 5; i++)
+    {
+        <span class="star"></span>
+    }
+}
+else
+{
+    @for (int i = 0; i < roundRating; i++)
+    {
+        <span class="star on"></span>
+    }
+
+    <span class="star half" id="starHalf"></span>
+
+    @for (int i = roundRating + 1; i < 5; i++)
+    {
+        <span class="star"></span>
+    }
+}
+@*<script>
+        $(function () {
+
+            var oddRatingWidth = $("#oddRatingWidth").val();
+
+            $(".star.half:after").css('width', oddRatingWidth + "!important");
+        });
+
+    </script>*@
+

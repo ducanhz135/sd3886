@@ -1,0 +1,63 @@
+<div class="container-xl">
+	<div class="table-responsive">
+		<div class="table-wrapper">
+			<div class="table-title">
+				<div class="row">
+					<div class="col-sm-6">
+						<h2>Manage <b>Products</b></h2>
+					</div>
+					<div class="col-sm-6">
+						
+						<a class="btn btn-primary" routerLink='/product/add' routerLinkActive='active'><i class="fa fa-plus" aria-hidden="true"></i>Create New</a>
+												
+						<input class="form-control search" name="search" placeholder="Search..." type="text" [(ngModel)]="term">
+					</div>
+					
+				</div>
+			</div>
+			<table class="table table-striped table-hover">
+				<thead>
+					<tr>
+     					   <th>Id</th>
+     					   <th>Name</th>
+    					    <th>Details</th>
+    					    <th>Original Price</th>
+    					    <th>Price</th>
+     					   <th>Language</th>
+     					   <th>Rate</th>
+    					  </tr>
+				</thead>
+				<tbody>
+					<tr *ngFor="let product of this.service.list |filter:term | paginate:{ id: 'listing_pagination',
+   						 itemsPerPage: 1,
+   						 currentPage: page,
+    						totalItems: totalRecords}" >
+						<td>{{product.Id}}</td>
+      						<td >{{product.Name}}</td>
+      						<td>{{product.Details}}</td>
+      						<td>{{product.OriginalPrice}}</td>
+      						<td>{{product.Price}}</td>
+     						 <td>{{product.LanguageId}}</td>
+      						<td class="star">
+        						<app-star-rating selectedValue="{{product.Rate}}" [readOnly]=true></app-star-rating>
+        					</td>
+     
+      						<td>
+        						<i class="fas fa-edit" title="Edit" (click)="onUpdate(product)"></i>
+      						</td>
+      						<td>
+        						<i class="far fa-trash-alt fa-lg text-danger"  title="Delete" (click)="onDelete(product.Id)"></i>
+      						</td>
+					</tr>
+					
+				</tbody>
+			</table>
+			<div>
+      			<pagination-controls id="listing_pagination" maxSize="5" directionLinks="true" (pageChange)="page = $event" >
+
+      			</pagination-controls>
+  			</div>
+		</div>
+	</div>        
+</div>
+

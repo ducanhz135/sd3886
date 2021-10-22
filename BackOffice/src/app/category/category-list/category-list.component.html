@@ -1,0 +1,61 @@
+<div class="container-xl">
+	<div class="table-responsive">
+		<div class="table-wrapper">
+			<div class="table-title">
+				<div class="row">
+					<div class="col-sm-6">
+						<h2>Manage <b>Categories</b></h2>
+					</div>
+					<div class="col-sm-6">
+						
+						<a class="btn btn-primary" routerLink='/category/add' routerLinkActive='active'><i class="fa fa-plus" aria-hidden="true"></i>Create New</a>
+												
+						<input class="form-control search" name="search" placeholder="Search..." type="text" [(ngModel)]="term">
+					</div>
+					
+				</div>
+			</div>
+			<table class="table table-striped table-hover">
+				<thead>
+					<tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Seo Description</th>
+                <th>Seo Alias</th>
+                <th>Language</th>
+                <th>Show On Home</th>
+                <th>Status</th>
+              </tr>
+				</thead>
+				<tbody>
+					<tr *ngFor="let category of this.service.list |filter:term | paginate:{ id: 'listing_pagination',
+    itemsPerPage: 1,
+    currentPage: page,
+    totalItems: totalRecords}" >
+      <td>{{category.Id}}</td>
+      <td >{{category.Name}}</td>
+      <td>{{category.SeoDescription}}</td>
+      <td>{{category.SeoAlias}}</td>
+      <td>{{category.LanguageId}}</td>
+      <td>{{category.IsShowOnHome}}</td>
+      <td>{{StatusEnum.Active == category.Status ? "Active" :" Inactive"}}</td>
+      
+      <td>
+        <i class="fas fa-edit" (click)="onUpdate(category)"></i>
+      </td>
+      <td>
+        <i class="far fa-trash-alt fa-lg text-danger" (click)="onDelete(category.Id)"></i>
+      </td>
+    </tr>
+					
+				</tbody>
+			</table>
+			<div>
+      			<pagination-controls id="listing_pagination" maxSize="5" directionLinks="true" (pageChange)="page = $event" >
+
+      			</pagination-controls>
+  			</div>
+		</div>
+	</div>        
+</div>
+

@@ -1,0 +1,73 @@
+﻿@model List<eCommerce.WebApp.Models.CartItem>
+@{
+    ViewData["Title"] = "Payment";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var path = "/_content/eCommerce.BackendApi/user-content/";
+}
+
+<div class="content">
+    <div class="section group">
+        @if (Model.Count > 0)
+        {
+            <table class="table">
+                <thead>
+                    <tr>
+                        <td>Product Code</td>
+                        <td>Product Name</td>
+                        <td>Image</td>
+                        <td>Quantity</td>
+                        <td>Price</td>
+                        <td>Total Price</td>
+                        <td></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.Product.Id</td>
+                            <td>@item.Product.Name</td>
+                            <td><img src="@(path+item.Product.ImagePath)" width="100" /></td>
+                            <td><input type="text" class="txtQuantity" data-id="@item.Product.Id" value="@item.Quantity" /></td>
+                            <td>@item.Product.Price.ToString("N0")</td>
+                            <td>@((item.Product.Price * item.Quantity).ToString("N0"))</td>
+                            <td><a asp-controller="cart" asp-action="remove" asp-route-id="@item.Product.Id" class="btn-delete">Xoá</a></td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        }
+
+    </div>
+    <div class="section group">
+        <div class="col-md-6">
+            @using (Html.BeginForm("Payment", "Cart", FormMethod.Post))
+            {
+                <div class="form-group">
+                    <label>Customer name</label>
+                    <input name="shipName" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label>Phone no.</label>
+                    <input name="mobile" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label>Address</label>
+                    <input name="address" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input name="email" class="form-control" />
+                </div>
+                @Html.DropDownList("status",
+    Html.GetEnumSelectList<eCommerce.Data.Emuns.OrderStatus>(),
+    "Select Status", new { @class = "form-control" })
+                
+                <button type="submit" class="btn">Submit Order</button>
+            }
+        </div>
+
+    </div>
+</div>
+

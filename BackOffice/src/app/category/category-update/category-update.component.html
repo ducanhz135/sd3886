@@ -1,0 +1,55 @@
+<h1 class="display-4 text-center">Edit Product</h1>
+    <hr>
+<div class="row">
+  <div class="col-md-12">
+    <form [formGroup]="updatedCategoryForm" autocomplete="off" (submit)="onUpdateSubmit()">
+        <input type="hidden" name="Id" formControlName="Id">
+        <input type="hidden" name="LanguageId" formControlName="LanguageId">
+  
+        <div class="form-group">
+          <div class="input-group">
+              <label class="col-sm-2 col-form-label" for="Name">Name:</label>
+            <input id="Name" name="Name" formControlName="Name" class="form-control"
+              placeholder="Name">
+          </div>
+        </div>
+    
+        <div class="form-group">
+          <div class="input-group">
+              <label class="col-sm-2 col-form-label">Seo Description:</label>
+            <input name="SeoDescription" formControlName="SeoDescription" class="form-control"
+              placeholder="Seo Description">
+          </div>
+        </div>
+    
+        <div class="form-group">
+          <div class="input-group">
+              <label class="col-sm-2 col-form-label">Seo Title:</label>
+            <input name="SeoTitle" formControlName="SeoTitle" class="form-control"
+              placeholder="SeoTitle" >
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="input-group">
+              <label class="col-sm-2 col-form-label">Seo Alias:</label>
+            <input name="SeoAlias" formControlName="SeoAlias" class="form-control"
+              placeholder="SeoAlias" >
+          </div>
+        </div>
+  
+        <div class="inline">
+          <div class="form-group cancel">
+              
+            <a type="button" class="btn btn-success" [routerLink]="['/category']" ><i class="fas fa-minus-circle"></i> Cancel</a>
+            
+          </div>
+          <div class="form-group submit">
+              
+              
+              <button class="btn btn-success" type="submit"><i class="fas fa-database"></i> Submit</button>
+            </div>
+        </div>
+       
+      </form>
+    </div>
+  </div>

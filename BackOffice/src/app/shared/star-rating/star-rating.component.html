@@ -1,0 +1,9 @@
+<ul class="list-inline rating-list" 
+          *ngFor="let star of stars" style="display: inline-block" >
+            <li (click)="countStar(star)"
+                (mouseover)="hoveringOver($event, star)"
+                (mouseout)="resetStar()"
+                [ngClass]="{'selected': (star <= selectedValue || star <= hoverStar )}">
+              <i class="fa fa-star"></i>
+            </li> 
+</ul>

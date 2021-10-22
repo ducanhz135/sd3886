@@ -1,0 +1,156 @@
+<h1 class="display-4 text-center">New Product</h1>
+    <hr>
+<div class="row">
+  <div class="col-md-12">
+<form [formGroup]="createdForm" autocomplete="off" (submit)="onCreateSubmit()" novalidate>
+
+  <div class="form-group">
+    <div class="input-group">
+      <!-- <div class="input-group-prepend">
+          <div class="input-group-text bg-white">
+            <i class="fas fa-user-circle" [class.green-icon]="CardOwnerName.valid" [class.red-icon]="CardOwnerName.invalid && CardOwnerName.touched"></i>
+          </div>
+        </div> -->
+      <label class="col-sm-2 col-form-label">Price:</label>
+      <input name="Price" formControlName="Price" class="form-control" type="number" placeholder="Price" (blur)="logValidationErrors()">
+    </div>
+    <span class="help-block" *ngIf="formErrors.Price">
+      {{formErrors.Price}}
+    </span>
+  </div>
+
+  <div class="form-group" [ngClass]="{'has-error':formErrors.OriginalPrice}">
+    <div class="input-group">
+      <label class="col-sm-2 col-form-label">Original Price:</label>
+      <input name="OriginalPrice" formControlName="OriginalPrice" type="number" class="form-control" placeholder="Original Price"
+        (blur)="logValidationErrors()">
+
+
+    </div>
+    <span class="help-block" *ngIf="formErrors.OriginalPrice">
+      {{formErrors.OriginalPrice}}
+    </span>
+  </div>
+
+  <div class="form-group" [ngClass]="{'has-error':formErrors.Stock}">
+    <div class="input-group">
+      <label class="col-sm-2 col-form-label">Stock:</label>
+      <input name="Stock" formControlName="Stock" type="number" class="form-control" placeholder="Stock" (blur)="logValidationErrors()">
+
+    </div>
+    <span class="help-block" *ngIf="formErrors.Stock">
+      {{formErrors.Stock}}
+    </span>
+  </div>
+
+  <div formGroupName="NameGroup">
+    <div class="form-group" [ngClass]="{'has-error':formErrors.Name}">
+      <div class="input-group">
+        <label class="col-sm-2 col-form-label">Name:</label>
+        <input name="Name" formControlName="Name" class="form-control" placeholder="Name" (blur)="logValidationErrors()">
+
+      </div>
+      <span class="help-block" *ngIf="formErrors.Name">
+        {{formErrors.Name}}
+      </span>
+    </div>
+
+    <div class="form-group" [ngClass]="{'has-error':formErrors.SeoAlias || formErrors.NameGroup}">
+      <div class="input-group">
+        <label class="col-sm-2 col-form-label">Seo Alias:</label>
+        <input name="SeoAlias" formControlName="SeoAlias" class="form-control" placeholder="SeoAlias" (blur)="logValidationErrors()">
+
+      </div>
+      <span class="help-block" *ngIf="formErrors.SeoAlias || formErrors.NameGroup">
+        {{formErrors.SeoAlias ? formErrors.SeoAlias : formErrors.NameGroup}}
+        
+      </span>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="input-group">
+      <label class="col-sm-2 col-form-label">Description:</label>
+      <input name="Description" formControlName="Description" class="form-control" placeholder="Description">
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="input-group">
+      <label class="col-sm-2 col-form-label">Details:</label>
+      <input name="Details" formControlName="Details" class="form-control" placeholder="Details">
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="input-group">
+      <label class="col-sm-2 col-form-label">Seo Description:</label>
+      <input name="SeoDescription" formControlName="SeoDescription" class="form-control" placeholder="SeoDescription">
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="input-group">
+      <label class="col-sm-2 col-form-label">Seo Title:</label>
+      <input name="SeoTitle" formControlName="SeoTitle" class="form-control" placeholder="SeoTitle">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="input-group">
+      <label class="col-sm-2 col-form-label">Language:</label>
+      <!-- <input name="LanguageId" formControlName="LanguageId"
+        class="form-control" placeholder="LanguageId" required> -->
+
+      <select class="form-control col-sm-2" formControlName="LanguageId">
+        <option *ngFor="let language of this.languages" [value]="language.Id" [selected]="language.IsDefault == true">{{language.Name}}</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="input-group">
+      <label class="col-sm-2 col-form-label">category:</label>
+
+      <select class="form-control col-sm-2" formControlName="CategoryId">
+        <option *ngFor="let category of this.categories" [value]="category.Id" [selected]="category.Id == 1">{{category.Name}}</option>
+        </select>
+    </div>
+   
+  </div>
+
+  <div class="form-group">
+    <div class="input-group">
+      <label class="col-sm-2 col-form-label">Upload Image:</label>
+      <input type="file" formControlName="ThumbnailImage" #ThumbnailImage name="ThumbnailImage" (change)="onFileSelected($event)" accept="image/gif, image/png, image/jpeg, image/bmp, image/webp">
+      <img [src]="sanitizer.bypassSecurityTrustUrl(imageUrl)">
+      <!-- <button type="button" (click)="onUpload()"></button>></button> -->
+    </div>
+    <span class="help-block" *ngIf="formErrors.ThumbnailImage">
+      {{formErrors.ThumbnailImage}}
+    </span>
+  </div>
+
+
+  <div class="form-group">
+    <div class="input-group">
+      <label class="col-sm-2 col-form-label">Star:</label>
+      <app-star-rating (onStarPicked)="doSomething($event)" selectedValue=0 [readOnly]=false></app-star-rating>
+    </div>
+    
+  </div>
+
+
+  <div class="inline">
+
+    <div class="form-group cancel">
+      <a class="btn btn-success" [routerLink]="['/product']">
+        <i class="fas fa-minus-circle"></i> Cancel</a>
+    </div>
+
+    <div class="form-group submit">
+      <button class="btn btn-success" type="submit" [disabled]='!createdForm.valid'>
+        <i class="fas fa-database"></i> Submit</button>
+    </div>
+  </div>
+
+</form>
+</div>
+</div>
